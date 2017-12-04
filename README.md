@@ -1,2 +1,2 @@
 # SAGA
-Sentiment Analyis Gender Age analysis tool for real time experiences.
+Sentiment Analysis Gender Age tool for real time experiences.
