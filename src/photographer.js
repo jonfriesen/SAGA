@@ -1,9 +1,10 @@
 var canvas;
-
-var _init = function() {
-    var video = document.getElementById('video');
+var context;
+var video;
+var init = function() {
+    video = document.getElementById('video');
     canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
+    context = canvas.getContext('2d');
     var tracker = new tracking.ObjectTracker('face');
     tracker.setInitialScale(4);
     tracker.setStepSize(2);
@@ -18,40 +19,64 @@ var _init = function() {
             context.fillStyle = "#fff";
             context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-            _onFaceIn();
+
+            _onFaceDetected();
         });
     });
 }
 
-var timeInterval = 10000;
+var timeInterval = 1000;
 
-var _onFaceIn = () => {
+var _onFaceDetected = () => {
+    faceTrackedSinceOutTimer = true;
     if (!haveFaceInCamera) {
-        debugger;
         if (typeof callback === "function") {
-            debugger;
-            setTimeout(() => {
-                _onFaceOut();
-            }, timeInterval);
-            canvas.toBlob(callback);
+            startOutTimer();
+            onFaceIn();
         }
+        haveFaceInCamera = true;
     }
-
-    haveFaceInCamera = true;
 }
 
 var haveFaceInCamera = false;
+var faceTrackedSinceOutTimer = false;
+var startOutTimer = () => {
+    faceTrackedSinceOutTimer = false;
+    setTimeout(() => {
+        if (!faceTrackedSinceOutTimer) {
+            haveFaceInCamera = false;
+            onFaceOut();
+        } else {
+            startOutTimer();
+        }
+    }, timeInterval);
+}
 
-var _onFaceOut = () => {
-    haveFaceInCamera = false;
+var pictureCanvas = document.createElement('canvas');
+
+var onFaceOut = () => {};
+var onFaceIn = () => {
+    // canvas.toBlob takes a callback function and will trigger it with the parameter of the actual blob
+    // canvas.toBlob(callback);
+    // debugger;
+    document.body.appendChild(pictureCanvas);
+    pictureCanvas.getContext('2d').drawImage(video, 0,0,100,100);
 };
 
-var callback;
+var callback = (blob)=>{
+    debugger;
+    var a =blob;
+};
 
 var startWatch = (watchCallback) => {
     callback = watchCallback;
 }
 
-window.onload = function() {
-    _init();
-};
+// window.onload = function() {
+//     _init();
+// };
+
+export {
+    init,
+    startWatch
+}
