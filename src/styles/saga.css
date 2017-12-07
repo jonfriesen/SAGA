@@ -7,8 +7,7 @@
 }
 
 .wrapper > div {
-    border: Red solid 2px;
-    background-color: orange;
+    border: lightskyblue solid 2px;
 }
 
 #logo {
