@@ -2,13 +2,12 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
-    grid-auto-rows: minmax(calc(25vh - 15px), auto);
+    grid-auto-rows: minmax(calc(25vw - 15px), auto);
     max-width: 100%;
 }
 
 .wrapper > div:not(#logo) {
     border: #3998cf solid 1px;
-    border-radius: 5px;
 }
 
 #logo {
