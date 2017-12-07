@@ -1,6 +1,6 @@
 
 
-function watchCamera(delay, callback) {
+export default function watchCamera(delay, callback) {
 
     // picture is taken
     // callback(the picture);

@@ -9,6 +9,7 @@ server.get("/canvas", (req, res) => {
   res.sendFile(__dirname + "/src/canvas.html");
 });
 
+// this is super dirty
 server.use(express.static("./"));
 
 

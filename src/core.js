@@ -1,9 +1,10 @@
 // Core js
+var photographer = require("./photographer.js");
 
-import * as wrangler from '/wrangler.js';
-import * as faceapi from '/faceapi.js';
-import * as view from '/view.js';
-import * as photographer from '/photographer.js';
+// import * as wrangler from '/wrangler.js';
+// import * as faceapi from '/faceapi.js';
+// import * as view from '/view.js';
+// import * as photographer from '/photographer.js';
 
 // get chart objects from html and pass to view
 
