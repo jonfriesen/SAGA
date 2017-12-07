@@ -5,7 +5,7 @@
 // Do magic
 function wrangle(aResponses) {
   var aMagic = [];
-  const oTimeStamp = new Date().getTime();
+  const iTimeStamp = new Date().getTime();
 
   for (var i = 0; i < aResponses.length; i++) {
     let sGender = aResponses[i].faceAttributes.gender;
@@ -18,7 +18,7 @@ function wrangle(aResponses) {
       age: iAge ? iAge : -1,
       emotions: oEmotion ? oEmotion : {},
       feeling: sEmotion ? sEmotion : '',
-      time: oTimeStamp
+      time: iTimeStamp
     };
 
     aMagic.push(oPerson);
