@@ -3,13 +3,14 @@
  */
 
 // Do magic
-var wrangle = function(aResponses) {
+function wrangle(aResponses) {
   var aMagic = [];
   const oTimeStamp = new Date();
   const oTime = {
-  	minutes: oTimeStamp.getMinutes(),
-  	hours: oTimeStamp.getHours()
+    minutes: oTimeStamp.getMinutes(),
+    hours: oTimeStamp.getHours()
   };
+
   for (var i = 0; i < aResponses.length; i++) {
     let sGender = aResponses[i].faceAttributes.gender;
     let iAge = aResponses[i].faceAttributes.age;
@@ -17,7 +18,7 @@ var wrangle = function(aResponses) {
 
     let oPerson = {
       gender: sGender ? sGender : '',
-      age: iAge ? iAge : '0',
+      age: iAge ? iAge : -1,
       emotion: sEmotion ? sEmotion : '',
       time: oTime
     };
@@ -26,7 +27,7 @@ var wrangle = function(aResponses) {
   }
 
   return aMagic;
-};
+}
 
 /**
  * get the most emotion as a string
