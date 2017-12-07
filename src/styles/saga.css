@@ -2,15 +2,18 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
-    grid-auto-rows: minmax(calc(25vh - 15px), auto);
+    grid-auto-rows: minmax(calc(25vw - 15px), auto);
     max-width: 100%;
 }
 
-.wrapper > div {
-    border: lightskyblue solid 2px;
+.wrapper > div:not(#logo) {
+    border: #3998cf solid 1px;
 }
 
 #logo {
+    background: url('../images/logo.png') no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
     grid-column-start: 1;
     grid-column-end: 1;
     grid-row-start: 1;
