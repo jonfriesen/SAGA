@@ -14,12 +14,14 @@ function wrangle(aResponses) {
   for (var i = 0; i < aResponses.length; i++) {
     let sGender = aResponses[i].faceAttributes.gender;
     let iAge = aResponses[i].faceAttributes.age;
+    let oEmotion = aResponses[i].faceAttributes.emotion;
     let sEmotion = getEmotionValue(aResponses[i].faceAttributes.emotion);
 
     let oPerson = {
       gender: sGender ? sGender : '',
       age: iAge ? iAge : -1,
-      emotion: sEmotion ? sEmotion : '',
+      emotions: oEmotion ? oEmotion : {},
+      feeling: sEmotion ? sEmotion : '',
       time: oTime
     };
 
