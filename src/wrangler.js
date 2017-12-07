@@ -5,11 +5,7 @@
 // Do magic
 function wrangle(aResponses) {
   var aMagic = [];
-  const oTimeStamp = new Date();
-  const oTime = {
-    minutes: oTimeStamp.getMinutes(),
-    hours: oTimeStamp.getHours()
-  };
+  const oTimeStamp = new Date().getTime();
 
   for (var i = 0; i < aResponses.length; i++) {
     let sGender = aResponses[i].faceAttributes.gender;
@@ -22,7 +18,7 @@ function wrangle(aResponses) {
       age: iAge ? iAge : -1,
       emotions: oEmotion ? oEmotion : {},
       feeling: sEmotion ? sEmotion : '',
-      time: oTime
+      time: oTimeStamp
     };
 
     aMagic.push(oPerson);
@@ -48,10 +44,7 @@ oPerson = {
     "surprise": 0.005
   },
   feeling: "neutral",
-  time: {
-    minutes: 27,
-    hours: 14
-  }
+  time: 1512686380559  // miliseconds
 }
 */
 
