@@ -56,11 +56,11 @@ var pictureCanvas = document.createElement('canvas');
 
 var onFaceOut = () => {};
 var onFaceIn = () => {
-    // canvas.toBlob takes a callback function and will trigger it with the parameter of the actual blob
-    // canvas.toBlob(callback);
-    // debugger;
     document.body.appendChild(pictureCanvas);
-    pictureCanvas.getContext('2d').drawImage(video, 0,0,100,100);
+    var width = 320;
+    var height = video.videoHeight / (video.videoWidth/width);
+    pictureCanvas.getContext('2d').drawImage(video, 0, 0, width, height);
+    pictureCanvas.toBlob(callback);
 };
 
 var callback = (blob)=>{
@@ -71,10 +71,6 @@ var callback = (blob)=>{
 var startWatch = (watchCallback) => {
     callback = watchCallback;
 }
-
-// window.onload = function() {
-//     _init();
-// };
 
 export {
     init,

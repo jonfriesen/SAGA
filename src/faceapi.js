@@ -26,7 +26,11 @@ function makeAPICall(image) {
 }
 
 var AnalyzeImage = function (img) {
-  return makeAPICall(img).then(resp => resp.json());
+    console.log("Analyzing Image!")
+    return makeAPICall(img).then(resp => {
+        console.table(resp);
+        return resp.json();
+    });
 };
 
 export {

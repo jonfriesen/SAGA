@@ -4,11 +4,11 @@ const faceApi = require("./faceapi.js");
 const view = require("./view.js");
 
 window.addEventListener("load", () => {
-    view.renderCharts();
+    // view.renderCharts();
     photographer.init();
     photographer.startWatch(data => {
-        // faceApi.AnalyzeImage(data).then(data => {
-        //     console.log(data);
-        // });
+        faceApi.AnalyzeImage(data).then(data => {
+            console.log(data);
+        });
     })
 });
