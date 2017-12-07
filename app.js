@@ -9,7 +9,7 @@ server.get("/canvas", (req, res) => {
   res.sendFile(__dirname + "/src/canvas.html");
 });
 
-server.use(express.static("src"));
+server.use(express.static("./"));
 
 
 server.listen(4000, () => {
