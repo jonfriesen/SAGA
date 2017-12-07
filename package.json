@@ -1,0 +1,20 @@
+{
+  "name": "saga",
+  "version": "1.0.0",
+  "description": "Sentiment Analysis Gender Age",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonFriesen/SAGA.git"
+  },
+  "author": "Jonathan Friesen, Daisy Tse, Wenguang Xu, Asif Mammadov, Albert Guo, Jeff Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonFriesen/SAGA/issues"
+  },
+  "homepage": "https://github.com/JonFriesen/SAGA#readme"
+}
