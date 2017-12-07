@@ -31,6 +31,30 @@ function wrangle(aResponses) {
   return aMagic;
 }
 
+
+/*
+Sample Person
+oPerson = {
+  gender: "male",
+  age: 24,
+  emotions: {
+    "anger": 0,
+    "contempt": 0,
+    "disgust": 0,
+    "fear": 0,
+    "happiness": 0,
+    "neutral": 0.986,
+    "sadness": 0.009,
+    "surprise": 0.005
+  },
+  feeling: "neutral",
+  time: {
+    minutes: 27,
+    hours: 14
+  }
+}
+*/
+
 /**
  * get the most emotion as a string
  * @param oEmotion object is the emotion part of the response
