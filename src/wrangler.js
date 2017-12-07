@@ -25,8 +25,18 @@ var wrangle = function(aResponses) {
     return aMagic;
 };
 
-var getEmotionValue = function(oEmotion) {
-    var sEmotion;
+/**
+ * get the most emotion as a string
+ * @param oEmotion object is the emotion part of the response
+ */
+function getEmotionValue(oEmotion) {
+    let sEmotion = '', iMaxEmotionValue = 0;
+    for (let key in oEmotion) { 
+    	if(oEmotion[key] > iMaxEmotionValue) {
+    		sEmotion = key;
+    		iMaxEmotionValue = oEmotion[key];
+    	}
+	}
     return sEmotion;
 }
 
