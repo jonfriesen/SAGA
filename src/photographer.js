@@ -48,7 +48,7 @@ var _onFaceOut = () => {
 
 var callback;
 
-startWatch = (watchCallback) => {
+var startWatch = (watchCallback) => {
     callback = watchCallback;
 }
 
