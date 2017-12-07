@@ -13,7 +13,7 @@ var wrangle = function(aResponses) {
     for (var i = 0; i < aResponses.length; i++) {
         sGender = aResponses[i].faceAttributes.gender;
         iAge = aResponses[i].faceAttributes.age;
-        sEmotion = getEmotionValue(aResponses.faceAttributes.emotion);
+        sEmotion = getEmotionValue(aResponses[i].faceAttributes.emotion);
 
         oPerson.gender = sGender;
         oPerson.age = iAge;
