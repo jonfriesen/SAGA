@@ -20,7 +20,7 @@
     grid-row-end: 1;
 }
 
-#people-time {
+#time-people {
     grid-column-start: 2;
     grid-column-end: 5;
     grid-row-start: 1;
