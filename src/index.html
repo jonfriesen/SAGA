@@ -1,10 +1,9 @@
 <html>
   <head>
-      <link rel="stylesheet" type="text/css" href="/styles/saga.css">
+      <link rel="stylesheet" type="text/css" href="src/styles/saga.css">
   </head>
   <title>the SAGA begins!</title>
   <body>
-    <p>Hello, World!</p>
     <div class="wrapper">
       <div id="logo" class="row-one col-one">logo</div>
       <div id="people-time" class="row-two col-one">people-time</div>
@@ -14,7 +13,16 @@
       <div id="crowd-emotion" class="row-two col-two">crowd-emotion</div>
       <div id="age-emotion" class="row-one col-one">age-emotion</div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="src/core.js"></script>
+    <script src="src/view.js"></script>
 
-    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+      $(document).ready(() => {
+        view();
+      });
+    </script>
   </body>
 </html>
