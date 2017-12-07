@@ -1,14 +1,36 @@
 /*
-* A wrangler file to retrieve data and make it meaningful
-*/
+ * A wrangler file to retrieve data and make it meaningful
+ */
 
 // Do magic
-var wrangle = function(oData) {
-    var oMagicData;
-    return oMagicData;
+var wrangle = function(aResponses) {
+    var aMagic = [];
+    var oPerson = {},
+        sGender,
+        sEmotion,
+        iAge;
+
+    for (var i = 0; i < aResponses.length; i++) {
+        sGender = aResponses[i].faceAttributes.gender;
+        iAge = aResponses[i].faceAttributes.age;
+        sEmotion = getEmotionValue(aResponses.faceAttributes.emotion);
+
+        oPerson.gender = sGender;
+        oPerson.age = iAge;
+        oPerson.emotion = sEmotion;
+
+        aMagic.push(oPerson);
+    }
+
+    return aMagic;
 };
 
-// Sample oData:
+var getEmotionValue = function(oEmotion) {
+    var sEmotion;
+    return sEmotion;
+}
+
+// Sample aResponses:
 /*
 [
   {
@@ -101,4 +123,6 @@ var wrangle = function(oData) {
 ]
 */
 
-export {wrangle};
+export {
+    wrangle
+};
