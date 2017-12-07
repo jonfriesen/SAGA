@@ -1,6 +1,9 @@
 // Core js
 var photographer = require("./photographer.js");
+const faceApi = require("./faceapi.js");
 
+
+faceApi.analyzeImage("asdasd");
 // import * as wrangler from '/wrangler.js';
 // import * as faceapi from '/faceapi.js';
 // import * as view from '/view.js';

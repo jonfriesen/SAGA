@@ -25,9 +25,11 @@ function makeAPICall(image) {
     return fetch(msUrl, options);
 }
 
-export function AnalyzeImage(img) {
+function AnalyzeImage(img) {
   return makeAPICall(img);
 }
+
+
 
 // Sample response:
 /*
