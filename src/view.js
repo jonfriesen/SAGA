@@ -251,10 +251,13 @@ var renderCharts = function () {
 };
 
 var updateCharts = function (wrangledData) {
-  _updateTimePeopleChart(wrangledData[0].time, wrangledData.length);
+  if (wrangledData) {
+    _updateTimePeopleChart(wrangledData[0].time, wrangledData.length);
+
+  }
 };
 
 export {
   renderCharts,
-  updateChart
+  updateCharts
 }
