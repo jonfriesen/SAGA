@@ -1,8 +1,8 @@
 .wrapper {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     grid-gap: 10px;
-    grid-auto-rows: minmax(calc(25vw - 15px), auto);
+    grid-auto-rows: minmax(calc(100vw/8 - 15px), auto);
     max-width: 100%;
 }
 
@@ -15,49 +15,49 @@
     background-position: 50% 50%;
     background-size: contain;
     grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-end: 3;
     grid-row-start: 1;
-    grid-row-end: 1;
+    grid-row-end: 3;
 }
 
 #time-people {
-    grid-column-start: 2;
-    grid-column-end: 5;
+    grid-column-start: 3;
+    grid-column-end: 9;
     grid-row-start: 1;
-    grid-row-end: 1;
+    grid-row-end: 3;
 }
 
 #camera {
     grid-column-start: 1;
-    grid-column-end: 1;
-    grid-row-start: 2;
-    grid-row-end: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 5;
 }
 
 #gender-emotion {
-    grid-column-start: 2;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 2;
-}
-
-#crowd-emotion {
     grid-column-start: 3;
-    grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 4;
+    grid-column-end: 6;
+    grid-row-start: 3;
+    grid-row-end: 5;
 }
 
 #count {
     grid-column-start: 1;
-    grid-column-end: 1;
-    grid-row-start: 3;
-    grid-row-end: 3;
+    grid-column-end: 3;
+    grid-row-start: 5;
+    grid-row-end: 7;
 }
 
 #age-emotion {
-    grid-column-start: 2;
-    grid-column-end: 2;
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 5;
+    grid-row-end: 7;
+}
+
+#crowd-emotion {
+    grid-column-start: 6;
+    grid-column-end: 9;
     grid-row-start: 3;
-    grid-row-end: 3;
+    grid-row-end: 7;
 }
