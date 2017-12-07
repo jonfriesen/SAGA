@@ -1,14 +1,14 @@
 // Core js
-var photographer = require("./photographer.js");
+const photographer = require("./photographer.js");
 const faceApi = require("./faceapi.js");
 const view = require("./view.js");
 
 window.addEventListener("load", () => {
-    view.renderCharts();
+    // view.renderCharts();
+    photographer.init();
+    photographer.startWatch(data => {
+        // faceApi.AnalyzeImage(data).then(data => {
+        //     console.log(data);
+        // });
+    })
 });
-
-// create instance of photographer and pass it function to call
-photographer.watchCamera(1, data => {
-    faceApi.AnalyzeImage(data)
-});
-
