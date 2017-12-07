@@ -5,6 +5,10 @@ server.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
 });
 
+server.get("/canvas", (req, res) => {
+  res.sendFile(__dirname + "/src/canvas.html");
+});
+
 server.use(express.static("src"));
 
 
