@@ -11,7 +11,7 @@
 }
 
 #logo {
-    background: url('../images/logo.png') no-repeat;
+    background: url('../images/logo-big.png') no-repeat;
     background-position: 50% 50%;
     background-size: contain;
     grid-column-start: 1;
