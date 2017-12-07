@@ -1,14 +1,45 @@
 /*
-* A wrangler file to retrieve data and make it meaningful
-*/
+ * A wrangler file to retrieve data and make it meaningful
+ */
 
 // Do magic
-var wrangle = function(oData) {
-    var oMagicData;
-    return oMagicData;
+var wrangle = function(aResponses) {
+  var aMagic = [];
+
+  for (var i = 0; i < aResponses.length; i++) {
+    let sGender = aResponses[i].faceAttributes.gender;
+    let iAge = aResponses[i].faceAttributes.age;
+    let sEmotion = getEmotionValue(aResponses[i].faceAttributes.emotion);
+
+    let oPerson = {
+      gender: sGender ? sGender : '',
+      age: iAge ? iAge : '0',
+      emotion: sEmotion ? sEmotion : ''
+    };
+
+    aMagic.push(oPerson);
+  }
+
+  return aMagic;
 };
 
-// Sample oData:
+/**
+ * get the most emotion as a string
+ * @param oEmotion object is the emotion part of the response
+ */
+function getEmotionValue(oEmotion) {
+  let sEmotion = '',
+    iMaxEmotionValue = 0;
+  for (let key in oEmotion) {
+    if (oEmotion[key] > iMaxEmotionValue) {
+      sEmotion = key;
+      iMaxEmotionValue = oEmotion[key];
+    }
+  }
+  return sEmotion;
+}
+
+// Sample aResponses:
 /*
 [
   {
@@ -101,4 +132,6 @@ var wrangle = function(oData) {
 ]
 */
 
-export {wrangle};
+export {
+  wrangle
+};
