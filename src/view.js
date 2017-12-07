@@ -1,4 +1,5 @@
 let timePeopleChart;
+let crowdEmotion;
 
 function _render() {
   Highcharts.setOptions({
@@ -12,7 +13,18 @@ function _render() {
       type: 'spline',
       animation: Highcharts.svg, // don't animate in old IE
       marginRight: 10,
-      events: {}
+      events: {
+        // load: function () {
+
+        //   // set up the updating of the chart each second
+        //   var series = this.series[0];
+        //   setInterval(function () {
+        //     var x = (new Date()).getTime(), // current time
+        //       y = Math.random();
+        //     series.addPoint([x, y]);
+        //   }, 1000);
+        // }
+      }
     },
     title: {
       text: 'Time vs People'
@@ -52,7 +64,7 @@ function _render() {
     }]
   });
 
-  Highcharts.chart("crowd-emotion", {
+  crowdEmotion = Highcharts.chart("crowd-emotion", {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -243,16 +255,18 @@ function _render() {
 }
 
 function _updateTimePeopleChart(time, numberOfPeople) {
-  timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+  if (timePeopleChart) {
+    timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+  }
 }
 
 var renderCharts = function () {
   _render();
 };
 
-var updateCharts = function (wrangledData) {
-  if (wrangledData) {
-    _updateTimePeopleChart(wrangledData[0].time, wrangledData.length);
+var updateCharts = function (persons) {
+  if (persons && persons.length > 0) {
+    _updateTimePeopleChart(persons[0].time, persons.length);
 
   }
 };

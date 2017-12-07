@@ -7,11 +7,10 @@ window.addEventListener("load", () => {
     view.renderCharts();
 });
 
-view.updateCharts();
-
 faceApi.AnalyzeImage("asdasd");
 
 // get chart objects from html and pass to view
+// view.updateCharts();
 
 // create instance of photographer and pass it function to call
 photographer.init();
