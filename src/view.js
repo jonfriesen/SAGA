@@ -167,10 +167,23 @@ let _render = () => {
     series: [{
       name: 'Emotion Intensities per Age Group',
       borderWidth: 1,
-      data: [],
+      data: [
+        [0,0,0], [1,0,0], [2,0,0], [3,0,0], [4,0,0], [5,0,0], [6,0,0], [7,0,0],
+        [0,1,0], [1,1,0], [2,1,0], [3,1,0], [4,1,0], [5,1,0], [6,1,0], [7,1,0],
+        [0,2,0], [1,2,0], [2,2,0], [3,2,0], [4,2,0], [5,2,0], [6,2,0], [7,2,0],
+        [0,3,0], [1,3,0], [2,3,0], [3,3,0], [4,3,0], [5,3,0], [6,3,0], [7,3,0],
+        [0,4,0], [1,4,0], [2,4,0], [3,4,0], [4,4,0], [5,4,0], [6,4,0], [7,4,0],
+        [0,5,0], [1,5,0], [2,5,0], [3,5,0], [4,5,0], [5,5,0], [6,5,0], [7,5,0],
+        [0,6,0], [1,6,0], [2,6,0], [3,6,0], [4,6,0], [5,6,0], [6,6,0], [7,6,0],
+        [0,7,0], [1,7,0], [2,7,0], [3,7,0], [4,7,0], [5,7,0], [6,7,0], [7,7,0]
+      ],
       dataLabels: {
         enabled: true,
+        format: '{point.value:.2f}',
         color: '#000000'
+      },
+      exporting: {
+        enabled: false
       }
     }]
 
@@ -265,14 +278,13 @@ let _updateCrowdEmotionChart = (emotionData) => {
   }
 };
 
-let _getAgeGroupIndex = person => {
+let _getAgeGroupIndex = age => {
   const AGE_GROUP_INCREMENT = 10;
-  let _age = person.age;
   let _index = 0;
   let _upperBound = 11;
 
   do {
-    if (_age < _upperBound) {
+    if (age < _upperBound) {
       return _index;
     }
     _upperBound += AGE_GROUP_INCREMENT;
@@ -283,19 +295,21 @@ let _getAgeGroupIndex = person => {
 
 let _updateAgeGroupEmotionChart = (persons) => {
   if (_ageGroupEmotionChart) {
+    let dataPoints = _ageGroupEmotionChart.series[0].data;
     persons.forEach(person => {
       let _age = person.age;
       let _emotionData = person.emotions;
       let _emotionKeyIndex = 0;
       for (let _emotionKey in _emotionData) {
-        _ageGroupEmotionChart.series[0].addPoint([
+        dataPoints.push([
           _getAgeGroupIndex(_age),
           _emotionKeyIndex,
           _emotionData[_emotionKey]
         ]);
+        _emotionKeyIndex++;
       }
-      _emotionKeyIndex++;
-    })
+    });
+    _ageGroupEmotionChart.series[0].setData(dataPoints);
   }
 };
 
