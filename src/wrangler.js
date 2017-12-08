@@ -16,6 +16,37 @@ function _generatePerson(oResponse) {
 /**
  * data wrangler function
  * @param response array from faceapi
+ * @return object format is listed below
+ *  {
+ *    persons: [
+ *      {
+ *        gender: "male",
+ *        age: 24,
+ *        emotions: {
+ *          "anger": 0,
+ *          "contempt": 0,
+ *          "disgust": 0,
+ *          "fear": 0,
+ *          "happiness": 0,
+ *          "neutral": 0.986,
+ *          "sadness": 0.009,
+ *          "surprise": 0.005
+ *        },
+ *        feeling: "neutral"
+ *      } // or more person objects
+ *    ],
+ *    time: 1512686380559,  // miliseconds
+ *    aggregatedAnalysis: {
+ *    "anger": 0,
+ *      "contempt": 0,
+ *      "disgust": 0,
+ *      "fear": 0,
+ *      "happiness": 0,
+ *      "neutral": 0.986,
+ *      "sadness": 0.009,
+ *      "surprise": 0.005
+ *    }
+ *  }
  */
 function wrangle(aResponses) {
   // validate input
@@ -57,29 +88,7 @@ function wrangle(aResponses) {
 
 /*
 Sample oData - return value from wrangleNew()
-{
-  aggregatedAnalysis: {
 
-  },
-  persons: [
-    {
-      gender: "male",
-      age: 24,
-      emotions: {
-        "anger": 0,
-        "contempt": 0,
-        "disgust": 0,
-        "fear": 0,
-        "happiness": 0,
-        "neutral": 0.986,
-        "sadness": 0.009,
-        "surprise": 0.005
-      },
-      feeling: "neutral"
-    } // or more person objects
-  ],
-  time: 1512686380559  // miliseconds
-}
 
 */
 
