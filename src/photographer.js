@@ -4,6 +4,22 @@ require("tracking/build/data/face");
 var canvas;
 var context;
 var video;
+
+var hdConstraints = {
+    video: {
+        mandatory: {
+            minWidth: 1280,
+            minHeight: 720
+        }
+    }
+};
+
+navigator.getUserMedia(hdConstraints, () => {
+    console.log("Successfuly set user media res");
+}, () => {
+    console.error("uhoh, something bad happend when settin user media");
+});
+
 var init = function() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
