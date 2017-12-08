@@ -320,7 +320,7 @@ let _updateAgeGroupEmotionChart = (persons) => {
   if (_ageGroupEmotionChart) {
     persons.forEach(person => {
       _ageGroupEmotionChart.series[0].addPoint([
-        person.
+        // person.
       ]);
     })
     _ageGroupEmotionChart.series[0].addPoint([time, numberOfPeople]);
