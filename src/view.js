@@ -128,7 +128,6 @@ let _render = () => {
       plotBorderWidth: 1
     },
 
-
     title: {
       text: 'Intensity per Age Group per Emotion'
     },
@@ -189,6 +188,47 @@ let _render = () => {
 
   });
 
+  //refactor needed to create this chart by passing in the default data
+
+  let defaultMaleData = {
+    name: 'male',
+    data: [0, 0, 0, 0, 0, 0, 0, 0]
+  };
+  let defaultFemaleData = {
+    name: 'female',
+    data: [0, 0, 0, 0, 0, 0, 0, 0]
+  };
+  _createNewGenderEmotionChart(defaultMaleData, defaultFemaleData); 
+}
+
+let _updateTimePeopleChart = (time, numberOfPeople) => {
+  if (_timePeopleChart) {
+    _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+  }
+};
+
+let _updatePeopleCounter = (numberOfPeople) => {
+  var count = parseInt($('#count').text(), 10);
+  if (count >= 0) {
+    $('#count').text(count + numberOfPeople);
+  }
+};
+
+let _updateCrowdEmotionChart = (emotionData) => {
+  if (_crowdEmotionChart) {
+    // Add all emotions that have a value
+    for (var emotionKey in emotionData) {
+      if (emotionData[emotionKey] > 0) {
+        _crowdEmotionChart.series[0].addPoint({
+          name: emotionKey,
+          y: emotionData[emotionKey]
+        });
+      }
+    }
+  }
+};
+
+let _createNewGenderEmotionChart = (maleData, femaleData) => {
   _genderEmotionChart = Highcharts.chart("gender-emotion", {
     chart: {
       type: 'column'
@@ -202,7 +242,7 @@ let _render = () => {
     yAxis: {
       min: 0,
       title: {
-        text: 'Total fruit consumption'
+        text: 'Gender Count'
       },
       stackLabels: {
         enabled: true,
@@ -236,50 +276,36 @@ let _render = () => {
         }
       }
     },
-    series: [{
-      name: 'Male',
-      data: [5, 3, 4, 7, 2]
-    }, {
-      name: 'Female',
-      data: [2, 2, 3, 2, 1]
-    }]
+    series: [
+      maleData, femaleData
+    ],
+    exporting: {
+      enabled: false
+    }
   });
-
-  // let x = (new Date()).getTime(); // current time
-  // let y = Math.random();
-  // _timePeopleChart.series[0].addPoint([x, y]);
-  // _timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
 }
 
-let _updateTimePeopleChart = (time, numberOfPeople) => {
-  if (_timePeopleChart) {
-    _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
-  }
-};
-
-let _updatePeopleCounter = (numberOfPeople) => {
-  var count = parseInt($('#count').text(), 10);
-  if (count >= 0) {
-    $('#count').text(count + numberOfPeople);
-  }
-};
-
-let _updateCrowdEmotionChart = (emotionData) => {
-  if (_crowdEmotionChart) {
-    // Add all emotions that have a value
-    for (var emotionKey in emotionData) {
-      if (emotionData[emotionKey] > 0) {
-        _crowdEmotionChart.series[0].addPoint({
-          name: emotionKey,
-          y: emotionData[emotionKey]
-        });
+let _updateGenderEmotionChart = (persons) => {
+  if (_genderEmotionChart) {
+    let maleData = _genderEmotionChart.options.series[0];
+    let femaleData = _genderEmotionChart.options.series[1];
+    
+    persons.forEach((person) => {
+      let emotionIndex = EMOTIONS.findIndex((EMOTION) => { return EMOTION === person.feeling; });
+      if (person.gender === "male") {
+        maleData.data[emotionIndex] = maleData.data[emotionIndex] + 1;
+      } else {
+        femaleData.data[emotionIndex] = femaleData.data[emotionIndex] + 1;
       }
-    }
+    });
+
+    _createNewGenderEmotionChart(maleData, femaleData); 
   }
 };
 
 let _getAgeGroupIndex = age => {
   const AGE_GROUP_INCREMENT = 10;
+
   let _index = 0;
   let _upperBound = 11;
 
@@ -313,12 +339,6 @@ let _updateAgeGroupEmotionChart = (persons) => {
   }
 };
 
-let _updateGenderEmotionChart = (time, numberOfPeople) => {
-  if (_genderEmotionChart) {
-    _genderEmotionChart.series[0].addPoint([time, numberOfPeople]);
-  }
-};
-
 let renderCharts = () => {
   _render();
 };
@@ -331,7 +351,7 @@ let updateCharts = (oData) => {
 
     _updateCrowdEmotionChart(oData.aggregatedAnalysis);
 
-    // _updateAgeGroupEmotionChart(oData.persons);
+    _updateGenderEmotionChart(oData.persons);
   }
 };
 
