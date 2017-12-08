@@ -74,7 +74,9 @@ window.addEventListener("load", () => {
         faceApi.AnalyzeImage(data).then(data => {
             console.table(data)
             let newData = wrangler.wrangle(data);
-            view.updateCharts(newData);
+            if (newData) {
+                view.updateCharts(newData);
+            }
         });
     });
 });

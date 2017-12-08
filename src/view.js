@@ -158,8 +158,8 @@ let _render = () => {
 
     tooltip: {
       formatter: function () {
-        return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-          this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+        return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> age <br><b>' +
+          this.point.value + '</b> in this count <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
       }
     },
 
@@ -352,8 +352,8 @@ let _updateAgeGroupEmotionChart = newDatapoints => {
 
         tooltip: {
           formatter: function () {
-            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-              this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> age <br><b>' +
+              this.point.value + '</b> people <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
           }
         },
 
