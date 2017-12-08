@@ -1,5 +1,3 @@
-
-
 // Core js
 const photographer = require("./photographer.js");
 const wrangler = require("./wrangler.js");
@@ -20,8 +18,7 @@ window.addEventListener("load", () => {
             "sadness": 0.009,
             "surprise": 0.005
         },
-        persons: [
-            {
+        persons: [{
                 gender: "male",
                 age: 24,
                 emotions: {
@@ -37,8 +34,8 @@ window.addEventListener("load", () => {
                 feeling: "neutral"
             } // or more person objects
         ],
-        time: 1512686380559  // miliseconds
-    }
+        time: 1512686380559 // miliseconds
+    };
     view.updateCharts(sampleData);
 
     let sampleData1 = {
@@ -52,8 +49,7 @@ window.addEventListener("load", () => {
             "sadness": 0.1,
             "surprise": 0.3
         },
-        persons: [
-            {
+        persons: [{
                 gender: "male",
                 age: 24,
                 emotions: {
@@ -69,15 +65,15 @@ window.addEventListener("load", () => {
                 feeling: "neutral"
             } // or more person objects
         ],
-        time: 2512686380559  // miliseconds
-    }
+        time: 2512686380559 // miliseconds
+    };
     view.updateCharts(sampleData1);
 
     photographer.init();
     photographer.startWatch(data => {
         faceApi.AnalyzeImage(data).then(data => {
             console.table(data)
-            let newData = wrangler.wrangleNew(data);
+            let newData = wrangler.wrangle(data);
         });
-    })
+    });
 });

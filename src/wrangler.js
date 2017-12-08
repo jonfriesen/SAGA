@@ -1,73 +1,51 @@
 /*
- * A wrangler file to retrieve data and make it meaningful
+ * A wrangler file to retrieve oData and make it meaningful
  */
 
-// Do magic
-function wrangle(aResponses) {
-  var aMagic = [];
-  const iTimeStamp = (new Date()).getTime();
+function _generatePerson(oResponse) {
+  let oPerson = {
+    gender: oResponse.faceAttributes.gender,
+    age: oResponse.faceAttributes.age,
+    emotions: oResponse.faceAttributes.emotion,
+    feeling: getEmotionValue(oResponse.faceAttributes.emotion)
+  };
 
-  for (var i = 0; i < aResponses.length; i++) {
-    let sGender = aResponses[i].faceAttributes.gender;
-    let iAge = aResponses[i].faceAttributes.age;
-    let oEmotion = aResponses[i].faceAttributes.emotion;
-    let sEmotion = getEmotionValue(aResponses[i].faceAttributes.emotion);
-
-    let oPerson = {
-      gender: sGender,
-      age: iAge,
-      emotions: oEmotion,
-      feeling: sEmotion,
-      time: iTimeStamp
-    };
-
-    aMagic.push(oPerson);
-  }
-
-  return aMagic;
+  return oPerson;
 }
 
-
-function wrangleNew(aResponses) {
-  if(!aResponses || !Array.isArray(aResponses) || aResponses.length === 0) {
+function wrangle(aResponses) {
+  if (!aResponses || !Array.isArray(aResponses) || aResponses.length === 0) {
     return null;
   }
-  let data = {
+
+  let oData = {
     aggregatedAnalysis: aResponses[0].faceAttributes.emotion,
     time: (new Date()).getTime(),
     persons: []
-  }
-  if(aResponses.length === 1) {
-    data.persons.push({
-      gender: aResponses[0].faceAttributes.gender,
-      age: aResponses[0].faceAttributes.age,
-      emotions: aResponses[0].faceAttributes.emotion,
-      feeling: getEmotionValue(aResponses[0].faceAttributes.emotion)
-    })
+  };
+
+  if (aResponses.length === 1) {
+    oData.persons.push(_generatePerson(aResponses[0]));
   } else {
     for (var i = 0; i < aResponses.length; i++) {
-      let oPerson = {
-        gender: aResponses[i].faceAttributes.gender,
-        age: aResponses[i].faceAttributes.age,
-        emotions: aResponses[i].faceAttributes.emotion,
-        feeling: getEmotionValue(aResponses[i].faceAttributes.emotion)
-      };
-      if(i > 0) {
-        for(let key in data.aggregatedAnalysis){
-          data.aggregatedAnalysis[key] += aResponses[i].faceAttributes.emotion[key];
+      let oPerson = _generatePerson(aResponses[i]);
+      if (i > 0) {
+        for (let key in oData.aggregatedAnalysis) {
+          oData.aggregatedAnalysis[key] += aResponses[i].faceAttributes.emotion[key];
         }
       }
-      data.persons.push(oPerson);
+      oData.persons.push(oPerson);
     }
-    for(let key in data.aggregatedAnalysis){
-        data.aggregatedAnalysis[key] /= aResponses.length;
+    for (let key in oData.aggregatedAnalysis) {
+      oData.aggregatedAnalysis[key] /= aResponses.length;
     }
   }
-  return data;
+
+  return oData;
 }
 
 /*
-Sample data - return value from wrangleNew()
+Sample oData - return value from wrangleNew()
 {
   aggregatedAnalysis: {
 
