@@ -1,5 +1,5 @@
 let timePeopleChart;
-let crowdEmotion;
+let crowdEmotionChart;
 
 function _render() {
   Highcharts.setOptions({
@@ -47,7 +47,7 @@ function _render() {
       formatter: function () {
         return '<b>' + this.series.name + '</b><br/>' +
           Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
-          Highcharts.numberFormat(this.y, 1);
+          Highcharts.numberFormat(this.y, 0);
       }
     },
     legend: {
@@ -57,14 +57,14 @@ function _render() {
       enabled: false
     },
     series: [{
-      name: 'TimePeople',
+      name: 'People',
       data: (function () {
         return [];
       }())
     }]
   });
 
-  crowdEmotion = Highcharts.chart("crowd-emotion", {
+  crowdEmotionChart = Highcharts.chart("crowd-emotion", {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -72,7 +72,7 @@ function _render() {
       type: 'pie'
     },
     title: {
-      text: 'Browser market shares January, 2015 to May, 2015'
+      text: 'Breakdown of the Current Photo'
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -90,30 +90,35 @@ function _render() {
         }
       }
     },
+    exporting: {
+      enabled: false
+    },
     series: [{
-      name: 'Brands',
+      name: 'Emotions',
       colorByPoint: true,
-      data: [{
-        name: 'IE',
-        y: 56.33
-      }, {
-        name: 'Chrome',
-        y: 24.03,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Firefox',
-        y: 10.38
-      }, {
-        name: 'Safari',
-        y: 4.77
-      }, {
-        name: 'Opera',
-        y: 0.91
-      }, {
-        name: 'Other',
-        y: 0.2
-      }]
+      data: [
+        // {
+        //   name: 'IE',
+        //   y: 56.33
+        // }, {
+        //   name: 'Chrome',
+        //   y: 24.03,
+        //   sliced: true,
+        //   selected: true
+        // }, {
+        //   name: 'Firefox',
+        //   y: 10.38
+        // }, {
+        //   name: 'Safari',
+        //   y: 4.77
+        // }, {
+        //   name: 'Opera',
+        //   y: 0.91
+        // }, {
+        //   name: 'Other',
+        //   y: 0.2
+        // }
+      ]
     }]
   });
 
@@ -248,15 +253,35 @@ function _render() {
 
   });
 
-  let x = (new Date()).getTime(); // current time
-  let y = Math.random();
-  timePeopleChart.series[0].addPoint([x, y]);
-  timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
+  // let x = (new Date()).getTime(); // current time
+  // let y = Math.random();
+  // timePeopleChart.series[0].addPoint([x, y]);
+  // timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
 }
 
 function _updateTimePeopleChart(time, numberOfPeople) {
   if (timePeopleChart) {
     timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+  }
+}
+
+function _updateCrowdEmotionChart(persons) {
+  if (crowdEmotionChart) {
+    // Remove previous pie chart data
+    crowdEmotionChart.series[0].setData([]);   
+
+    // Add all emotions that have a value
+    persons.forEach((person) => {
+      let emotionData = person.emotions;
+      for (var emotionKey in emotionData) {
+        if (emotionData[emotionKey] > 0) {
+          crowdEmotionChart.series[0].addPoint({
+            name: emotionKey,
+            y: emotionData[emotionKey]
+          });
+        }
+      }
+    });
   }
 }
 
@@ -267,7 +292,9 @@ var renderCharts = function () {
 var updateCharts = function (persons) {
   if (persons && persons.length > 0) {
     _updateTimePeopleChart(persons[0].time, persons.length);
+    //TODO: add the total people increment function here
 
+    _updateCrowdEmotionChart(persons);
   }
 };
 
