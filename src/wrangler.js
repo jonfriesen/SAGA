@@ -7,7 +7,7 @@ function _generatePerson(oResponse) {
     gender: oResponse.faceAttributes.gender,
     age: oResponse.faceAttributes.age,
     emotions: oResponse.faceAttributes.emotion,
-    feeling: getEmotionValue(oResponse.faceAttributes.emotion)
+    feeling: _getEmotionValue(oResponse.faceAttributes.emotion)
   };
 
   return oPerson;
@@ -18,31 +18,38 @@ function _generatePerson(oResponse) {
  * @param response array from faceapi
  */
 function wrangle(aResponses) {
+  // validate input
   if(!aResponses || !Array.isArray(aResponses) || aResponses.length === 0) {
     return null;
   }
 
+  // def data structure
+  // initialized with the first person
   let oData = {
-    aggregatedAnalysis: aResponses[0].faceAttributes.emotion,
+    persons: [],
     time: (new Date()).getTime(),
-    persons: []
+    aggregatedAnalysis: {
+      "anger": 0,
+      "contempt": 0,
+      "disgust": 0,
+      "fear": 0,
+      "happiness": 0,
+      "neutral": 0,
+      "sadness": 0,
+      "surprise": 0
+    }
   };
-
-  if (aResponses.length === 1) {
-    oData.persons.push(_generatePerson(aResponses[0]));
-  } else {
-    for (var i = 0; i < aResponses.length; i++) {
-      let oPerson = _generatePerson(aResponses[i]);
-      if (i > 0) {
-        for (let key in oData.aggregatedAnalysis) {
-          oData.aggregatedAnalysis[key] += aResponses[i].faceAttributes.emotion[key];
-        }
-      }
-      oData.persons.push(oPerson);
-    }
+  // for any addtional person in the input, add the person and cumulate emotions
+  for (let i = 0; i < aResponses.length; i++) {
     for (let key in oData.aggregatedAnalysis) {
-      oData.aggregatedAnalysis[key] /= aResponses.length;
+      oData.aggregatedAnalysis[key] += aResponses[i].faceAttributes.emotion[key];
     }
+    oData.persons.push(_generatePerson(aResponses[i]));
+  }
+
+  // calculate the average value for each emotion
+  for (let key in oData.aggregatedAnalysis) {
+    oData.aggregatedAnalysis[key] /= aResponses.length;
   }
 
   return oData;
@@ -80,7 +87,7 @@ Sample oData - return value from wrangleNew()
  * get the most emotion as a string
  * @param oEmotion object is the emotion part of the response
  */
-function getEmotionValue(oEmotion) {
+function _getEmotionValue(oEmotion) {
   let sEmotion = '',
     iMaxEmotionValue = 0;
   for (let key in oEmotion) {
