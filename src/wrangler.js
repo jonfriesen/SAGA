@@ -91,7 +91,7 @@ function wrangle(aResponses) {
     },
     heatmapdp: []
   };
-
+  let iAge, iAgeIndex, iEmotionIndex;
 
   // for any addtional person in the input, add the person and cumulate emotions
   for (let i = 0; i < aResponses.length; i++) {
@@ -99,9 +99,9 @@ function wrangle(aResponses) {
       oData.aggregatedAnalysis[key] += aResponses[i].faceAttributes.emotion[key];
     }
     oData.persons.push(_generatePerson(aResponses[i]));
-    const iAge = aResponses[i].faceAttributes.age;
-    const iAgeIndex = (iAge > 70) ? 7 : Math.floor(iAge % 10);
-    const iEmotionIndex = oEmotionTable[_getEmotionValue(aResponses[i].faceAttributes.emotion)];
+    iAge = aResponses[i].faceAttributes.age;
+    iAgeIndex = (iAge > 70) ? 7 : Math.floor(iAge / 10);
+    iEmotionIndex = oEmotionTable[_getEmotionValue(aResponses[i].faceAttributes.emotion)];
     datapointgrid[iAgeIndex * 8 + iEmotionIndex][2]++;
   }
 
