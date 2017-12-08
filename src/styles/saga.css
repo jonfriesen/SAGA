@@ -54,21 +54,24 @@
 
 #crowd-emotion {
     grid-column-start: 3;
-    grid-column-end: 5;
+    grid-column-end: 6;
     grid-row-start: 5;
-    grid-row-end: 8;
+    grid-row-end: 7;
 }
 
-#age-emotion {
+#agegroup-emotion {
     grid-column-start: 6;
     grid-column-end: 9;
     grid-row-start: 3;
     grid-row-end: 7;
-    grid-row-end: 3;
 }
 
 .cameraCanvas {
     position: absolute;
-    width: 320px;
-    height: 240px;
+    /* width: 320px;
+    height: 240px; */
+}
+
+.cameraVideo {
+    width: 100%;
 }
