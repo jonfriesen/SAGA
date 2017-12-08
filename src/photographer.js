@@ -44,16 +44,15 @@ var init = function() {
             _onFaceDetected();
         });
     });
-
-    // canvas.width = video.videoWidth;
-    // canvas.height = video.videoHeight;
     
-    var cameraDiv = document.querySelector(".cameraDiv");
-    canvas.setAttribute("height", cameraDiv.offsetHeight);
-    canvas.setAttribute("width", cameraDiv.offsetWidth);
-
-    invisibleCanvas.setAttribute("height", 720);
-    invisibleCanvas.setAttribute("width", 1280);
+    setTimeout(() => {
+        canvas.setAttribute("height", video.offsetHeight);
+        console.log(video.offsetHeight);
+        canvas.setAttribute("width", video.offsetWidth);
+    
+        invisibleCanvas.setAttribute("height", 720);
+        invisibleCanvas.setAttribute("width", 1280);
+    }, 3000);
 }
 
 var timeInterval = 1000;
