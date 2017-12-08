@@ -1,3 +1,6 @@
+require("tracking");
+require("tracking/build/data/face");
+
 var canvas;
 var context;
 var video;
@@ -14,6 +17,8 @@ var init = function() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         event.data.forEach(function(rect) {
             context.strokeStyle = '#a64ceb';
+            var canvasPos = $(canvas).position();
+            canvasPos.top;
             context.strokeRect(rect.x, rect.y, rect.width, rect.height);
             context.font = '11px Helvetica';
             context.fillStyle = "#fff";
@@ -64,8 +69,8 @@ var onFaceIn = () => {
 };
 
 var callback = (blob)=>{
-    debugger;
-    var a =blob;
+    // debugger;
+    // var a =blob;
 };
 
 var startWatch = (watchCallback) => {
