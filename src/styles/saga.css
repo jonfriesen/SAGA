@@ -46,6 +46,10 @@
     grid-column-end: 3;
     grid-row-start: 5;
     grid-row-end: 7;
+    font-family: Helvetica;
+    font-size: 200px;
+    color: #3998cf;
+    text-align: center;
 }
 
 #crowd-emotion {
