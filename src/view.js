@@ -10,14 +10,14 @@ const AGE_GROUPS = [
   "70+"
 ];
 const EMOTIONS = [
-  "Anger",
-  "Contempt",
-  "Disgust",
-  "Fear",
-  "Happiness",
-  "Neutral",
-  "Sadness",
-  "Surprise"
+  "anger",
+  "contempt",
+  "disgust",
+  "fear",
+  "happiness",
+  "neutral",
+  "sadness",
+  "surprise"
 ];
 
 let _render = () => {
@@ -115,29 +115,7 @@ let _render = () => {
     series: [{
       name: 'Emotions',
       colorByPoint: true,
-      data: [
-        // {
-        //   name: 'IE',
-        //   y: 56.33
-        // }, {
-        //   name: 'Chrome',
-        //   y: 24.03,
-        //   sliced: true,
-        //   selected: true
-        // }, {
-        //   name: 'Firefox',
-        //   y: 10.38
-        // }, {
-        //   name: 'Safari',
-        //   y: 4.77
-        // }, {
-        //   name: 'Opera',
-        //   y: 0.91
-        // }, {
-        //   name: 'Other',
-        //   y: 0.2
-        // }
-      ]
+      data: []
     }]
   });
 
@@ -190,11 +168,22 @@ let _render = () => {
       name: 'Emotion Intensities per Age Group',
       borderWidth: 1,
       data: [
-        // [0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]
+        [0,0,0], [1,0,0], [2,0,0], [3,0,0], [4,0,0], [5,0,0], [6,0,0], [7,0,0],
+        [0,1,0], [1,1,0], [2,1,0], [3,1,0], [4,1,0], [5,1,0], [6,1,0], [7,1,0],
+        [0,2,0], [1,2,0], [2,2,0], [3,2,0], [4,2,0], [5,2,0], [6,2,0], [7,2,0],
+        [0,3,0], [1,3,0], [2,3,0], [3,3,0], [4,3,0], [5,3,0], [6,3,0], [7,3,0],
+        [0,4,0], [1,4,0], [2,4,0], [3,4,0], [4,4,0], [5,4,0], [6,4,0], [7,4,0],
+        [0,5,0], [1,5,0], [2,5,0], [3,5,0], [4,5,0], [5,5,0], [6,5,0], [7,5,0],
+        [0,6,0], [1,6,0], [2,6,0], [3,6,0], [4,6,0], [5,6,0], [6,6,0], [7,6,0],
+        [0,7,0], [1,7,0], [2,7,0], [3,7,0], [4,7,0], [5,7,0], [6,7,0], [7,7,0]
       ],
       dataLabels: {
         enabled: true,
+        format: '{point.value:.2f}',
         color: '#000000'
+      },
+      exporting: {
+        enabled: false
       }
     }]
 
@@ -289,41 +278,38 @@ let _updateCrowdEmotionChart = (emotionData) => {
   }
 };
 
-let _getAgeGroup = person => {
-  const MAX_AGE = 71;
-  // const AGE_GROUP_INCREMENT = 10;
-  let _age = person.age;
+let _getAgeGroupIndex = age => {
+  const AGE_GROUP_INCREMENT = 10;
   let _index = 0;
   let _upperBound = 11;
 
-  // TODO: Clean up this code
-  if (_age < _upperBound) {
-    return AGE_GROUP[_index];
-  } else if (_age < 21) {
-    return AGE_GROUP[1];
-  } else if (_age < 31) {
-    return AGE_GROUP[2];
-  } else if (_age < 41) {
-    return AGE_GROUP[3];
-  } else if (_age < 51) {
-    return AGE_GROUP[4];
-  } else if (_age < 61) {
-    return AGE_GROUP[5];
-  } else if (_age < MAX_AGE) {
-    return AGE_GROUP[6];
-  } else {
-    return AGE_GROUP[7];
-  }
+  do {
+    if (age < _upperBound) {
+      return _index;
+    }
+    _upperBound += AGE_GROUP_INCREMENT;
+    _index++;
+  } while (_index < AGE_GROUPS.length);
+  return _index;
 };
 
 let _updateAgeGroupEmotionChart = (persons) => {
   if (_ageGroupEmotionChart) {
+    let dataPoints = _ageGroupEmotionChart.series[0].data;
     persons.forEach(person => {
-      _ageGroupEmotionChart.series[0].addPoint([
-        // person.
-      ]);
-    })
-    _ageGroupEmotionChart.series[0].addPoint([time, numberOfPeople]);
+      let _age = person.age;
+      let _emotionData = person.emotions;
+      let _emotionKeyIndex = 0;
+      for (let _emotionKey in _emotionData) {
+        dataPoints.push([
+          _getAgeGroupIndex(_age),
+          _emotionKeyIndex,
+          _emotionData[_emotionKey]
+        ]);
+        _emotionKeyIndex++;
+      }
+    });
+    _ageGroupEmotionChart.series[0].setData(dataPoints);
   }
 };
 
@@ -344,6 +330,8 @@ let updateCharts = (oData) => {
     _updatePeopleCounter(oData.persons.length);
 
     _updateCrowdEmotionChart(oData.aggregatedAnalysis);
+
+    _updateAgeGroupEmotionChart(oData.persons);
   }
 };
 
