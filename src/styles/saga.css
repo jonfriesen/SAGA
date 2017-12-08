@@ -65,6 +65,10 @@
 
 .cameraCanvas {
     position: absolute;
-    width: 320px;
-    height: 240px;
+    /* width: 320px;
+    height: 240px; */
+}
+
+.cameraVideo {
+    width: 100%;
 }

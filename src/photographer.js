@@ -44,6 +44,16 @@ var init = function() {
             _onFaceDetected();
         });
     });
+
+    // canvas.width = video.videoWidth;
+    // canvas.height = video.videoHeight;
+    
+    var cameraDiv = document.querySelector(".cameraDiv");
+    canvas.setAttribute("height", cameraDiv.offsetHeight);
+    canvas.setAttribute("width", cameraDiv.offsetWidth);
+
+    invisibleCanvas.setAttribute("height", 720);
+    invisibleCanvas.setAttribute("width", 1280);
 }
 
 var timeInterval = 1000;
@@ -73,15 +83,14 @@ var startOutTimer = () => {
     }, timeInterval);
 }
 
-var pictureCanvas = document.createElement('canvas');
+var invisibleCanvas = document.createElement('canvas');
 
 var onFaceOut = () => {};
 var onFaceIn = () => {
-    document.body.appendChild(pictureCanvas);
-    var width = 320;
-    var height = video.videoHeight / (video.videoWidth/width);
-    pictureCanvas.getContext('2d').drawImage(video, 0, 0, width, height);
-    pictureCanvas.toBlob(callback);
+    
+    document.body.appendChild(invisibleCanvas);
+    invisibleCanvas.getContext('2d').drawImage(video, 0, 0, 1280, 720);
+    invisibleCanvas.toBlob(callback);
 };
 
 var callback = (blob)=>{
