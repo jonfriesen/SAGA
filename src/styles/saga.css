@@ -48,14 +48,14 @@
     grid-row-end: 7;
 }
 
-#age-emotion {
+#crowd-emotion {
     grid-column-start: 3;
     grid-column-end: 5;
     grid-row-start: 5;
-    grid-row-end: 7;
+    grid-row-end: 8;
 }
 
-#crowd-emotion {
+#age-emotion {
     grid-column-start: 6;
     grid-column-end: 9;
     grid-row-start: 3;
