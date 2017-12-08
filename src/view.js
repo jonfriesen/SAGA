@@ -27,97 +27,20 @@ let _render = () => {
     }
   });
 
-  _timePeopleChart = Highcharts.chart('time-people', {
-    chart: {
-      type: 'spline',
-      animation: Highcharts.svg, // don't animate in old IE
-      marginRight: 10,
-      events: {
-        // load: function () {
+  _timePeopleChart = _createTimePeopleChart();
 
-        //   // set up the updating of the chart each second
-        //   var series = this.series[0];
-        //   setInterval(function () {
-        //     var x = (new Date()).getTime(), // current time
-        //       y = Math.random();
-        //     series.addPoint([x, y]);
-        //   }, 1000);
-        // }
-      }
-    },
-    title: {
-      text: 'Time vs People'
-    },
-    xAxis: {
-      type: 'datetime',
-      tickPixelInterval: 150
-    },
-    yAxis: {
-      title: {
-        text: 'Number of People'
-      },
-      plotLines: [{
-        value: 0,
-        width: 1,
-        color: '#808080'
-      }]
-    },
-    tooltip: {
-      formatter: function () {
-        return '<b>' + this.series.name + '</b><br/>' +
-          Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
-          Highcharts.numberFormat(this.y, 0);
-      }
-    },
-    legend: {
-      enabled: false
-    },
-    exporting: {
-      enabled: false
-    },
-    series: [{
-      name: 'People',
-      data: (function () {
-        return [];
-      }())
-    }]
-  });
+  _crowdEmotionChart = _createCrowdEmotionChart([]);
 
-  _crowdEmotionChart = Highcharts.chart("crowd-emotion", {
-    chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: 'pie'
-    },
-    title: {
-      text: 'Breakdown All Emotions'
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true,
-          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-          style: {
-            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-          }
-        }
-      }
-    },
-    exporting: {
-      enabled: false
-    },
-    series: [{
-      name: 'Emotions',
-      colorByPoint: true,
-      data: []
-    }]
-  });
+  _genderEmotionChart = _createGenderEmotionChart(
+    {
+      name: 'male',
+      data: [0, 0, 0, 0, 0, 0, 0, 0]
+    }, 
+    {
+      name: 'female',
+      data: [0, 0, 0, 0, 0, 0, 0, 0]
+    }
+  ); 
 
   _ageGroupEmotionChart = Highcharts.chart("agegroup-emotion", {
 
@@ -178,49 +101,95 @@ let _render = () => {
     }]
 
   });
-
-  //refactor needed to create this chart by passing in the default data
-
-  let defaultMaleData = {
-    name: 'male',
-    data: [0, 0, 0, 0, 0, 0, 0, 0]
-  };
-  let defaultFemaleData = {
-    name: 'female',
-    data: [0, 0, 0, 0, 0, 0, 0, 0]
-  };
-  _createNewGenderEmotionChart(defaultMaleData, defaultFemaleData);
 }
 
-let _updateTimePeopleChart = (time, numberOfPeople) => {
-  if (_timePeopleChart) {
-    _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
-  }
-};
-
-let _updatePeopleCounter = (numberOfPeople) => {
-  var count = parseInt($('#count').text(), 10);
-  if (count >= 0) {
-    $('#count').text(count + numberOfPeople);
-  }
-};
-
-let _updateCrowdEmotionChart = (emotionData) => {
-  if (_crowdEmotionChart) {
-    // Add all emotions that have a value
-    for (var emotionKey in emotionData) {
-      if (emotionData[emotionKey] > 0) {
-        _crowdEmotionChart.series[0].addPoint({
-          name: emotionKey,
-          y: emotionData[emotionKey]
-        });
+let _createTimePeopleChart = () => {
+  return Highcharts.chart('time-people', {
+    chart: {
+      type: 'spline',
+      animation: Highcharts.svg, // don't animate in old IE
+      marginRight: 10,
+      events: {}
+    },
+    title: {
+      text: 'Time vs People'
+    },
+    xAxis: {
+      type: 'datetime',
+      tickPixelInterval: 150
+    },
+    yAxis: {
+      title: {
+        text: 'Number of People'
+      },
+      plotLines: [{
+        value: 0,
+        width: 1,
+        color: '#808080'
+      }]
+    },
+    tooltip: {
+      formatter: function () {
+        return '<b>' + this.series.name + '</b><br/>' +
+          Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
+          Highcharts.numberFormat(this.y, 0);
       }
-    }
-  }
-};
+    },
+    legend: {
+      enabled: false
+    },
+    exporting: {
+      enabled: false
+    },
+    series: [{
+      name: 'People',
+      data: (function () {
+        return [];
+      }())
+    }]
+  });
+}
 
-let _createNewGenderEmotionChart = (maleData, femaleData) => {
-  _genderEmotionChart = Highcharts.chart("gender-emotion", {
+let _createCrowdEmotionChart = (data) => {
+  return Highcharts.chart("crowd-emotion", {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Breakdown All Emotions'
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          }
+        }
+      }
+    },
+    exporting: {
+      enabled: false
+    },
+    series: [{
+      name: 'Emotions',
+      colorByPoint: true,
+      data: data
+    }]
+  });
+}
+
+let _createGenderEmotionChart = (maleData, femaleData) => {
+  return Highcharts.chart("gender-emotion", {
     chart: {
       type: 'column'
     },
@@ -276,6 +245,56 @@ let _createNewGenderEmotionChart = (maleData, femaleData) => {
   });
 }
 
+let _updateTimePeopleChart = (time, numberOfPeople) => {
+  if (_timePeopleChart) {
+    _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+  }
+};
+
+let _updatePeopleCounter = (numberOfPeople) => {
+  var count = parseInt($('#count').text(), 10);
+  if (count >= 0) {
+    $('#count').text(count + numberOfPeople);
+  }
+};
+
+let _updateCrowdEmotionChart = (emotionData, datasize) => {
+  if (_crowdEmotionChart) {
+    var count = parseInt($('#count').text(), 10);
+
+    let data = _crowdEmotionChart.options.series[0].data;
+    // Add all emotions that have a value
+    if (data.length > 0) {
+      for (var emotionKey in emotionData) {
+        if (emotionData[emotionKey] > 0) {
+          let index = data.findIndex((emotion) => {return emotion.name === emotionKey});
+          if (index < 0) {
+            data.push({
+              name: emotionKey,
+              y: (datasize * emotionData[emotionKey]) / (count + datasize)
+            });
+          } else {
+            data[index] = {
+              name: emotionKey,
+              y: ((count * data[index].y) + (datasize * emotionData[emotionKey])) / (count + datasize)
+            }
+          }
+        }
+      }
+    } else {
+      for (var emotionKey in emotionData) {
+        if (emotionData[emotionKey] > 0) {
+          data.push({
+            name: emotionKey,
+            y: emotionData[emotionKey]
+          });
+        }
+      }
+    }
+    _crowdEmotionChart = _createCrowdEmotionChart(data);
+  }
+};
+
 let _updateGenderEmotionChart = (persons) => {
   if (_genderEmotionChart) {
     let maleData = _genderEmotionChart.options.series[0];
@@ -290,7 +309,7 @@ let _updateGenderEmotionChart = (persons) => {
       }
     });
 
-    _createNewGenderEmotionChart(maleData, femaleData);
+    _genderEmotionChart = _createGenderEmotionChart(maleData, femaleData); 
   }
 };
 
@@ -380,14 +399,18 @@ let renderCharts = () => {
 
 let updateCharts = (oData) => {
   if (oData.persons && oData.persons.length > 0) {
-    _updateTimePeopleChart(oData.time, oData.persons.length);
 
-    _updatePeopleCounter(oData.persons.length);
-
-    _updateCrowdEmotionChart(oData.aggregatedAnalysis);
+    _updateCrowdEmotionChart(oData.aggregatedAnalysis, oData.persons.length);
 
     _ageGroupEmotionChart.destroy();
     _updateAgeGroupEmotionChart(oData.heatmapdp);
+    
+    _updateGenderEmotionChart(oData.persons);
+
+    _updateTimePeopleChart(oData.time, oData.persons.length);
+
+    _updatePeopleCounter(oData.persons.length);//needs to come after _updateCrowdEmotionChart
+
   }
 };
 
