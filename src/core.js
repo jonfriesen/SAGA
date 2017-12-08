@@ -39,8 +39,39 @@ window.addEventListener("load", () => {
         ],
         time: 1512686380559  // miliseconds
     }
-
     view.updateCharts(sampleData);
+
+    let sampleData1 = {
+        aggregatedAnalysis: {
+            "anger": 0.1,
+            "contempt": 0.1,
+            "disgust": 0.1,
+            "fear": 0.1,
+            "happiness": 0.1,
+            "neutral": 0.1,
+            "sadness": 0.1,
+            "surprise": 0.3
+        },
+        persons: [
+            {
+                gender: "male",
+                age: 24,
+                emotions: {
+                    "anger": 0.1,
+                    "contempt": 0.1,
+                    "disgust": 0.1,
+                    "fear": 0.1,
+                    "happiness": 0.1,
+                    "neutral": 0.1,
+                    "sadness": 0.1,
+                    "surprise": 0.3
+                },
+                feeling: "neutral"
+            } // or more person objects
+        ],
+        time: 2512686380559  // miliseconds
+    }
+    view.updateCharts(sampleData1);
 
     photographer.init();
     photographer.startWatch(data => {
