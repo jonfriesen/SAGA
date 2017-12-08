@@ -70,7 +70,7 @@ function wrangleNew(aResponses) {
 Sample data - return value from wrangleNew()
 {
   aggregatedAnalysis: {
-  
+
   },
   persons: [
     {
@@ -204,5 +204,6 @@ function getEmotionValue(oEmotion) {
 */
 
 export {
-  wrangle
+  wrangle,
+  wrangleNew
 };

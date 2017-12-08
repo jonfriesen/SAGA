@@ -1,5 +1,8 @@
+
+
 // Core js
 const photographer = require("./photographer.js");
+const wrangler = require("./wrangler.js");
 const faceApi = require("./faceapi.js");
 const view = require("./view.js");
 
@@ -8,7 +11,7 @@ window.addEventListener("load", () => {
     photographer.init();
     photographer.startWatch(data => {
         faceApi.AnalyzeImage(data).then(data => {
-            console.log(data);
+            let newData = wrangler.wrangleNew(data);
         });
     })
     // let oPerson = {
