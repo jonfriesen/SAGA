@@ -258,19 +258,19 @@ let _render = () => {
   // _timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
 }
 
-_updateTimePeopleChart = (time, numberOfPeople) => {
+let _updateTimePeopleChart = (time, numberOfPeople) => {
   if (_timePeopleChart) {
     _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
   }
 };
 
-_updateCrowdEmotionChart = persons => {
+let _updateCrowdEmotionChart = persons => {
   if (_crowdEmotionChart) {
     // Remove previous pie chart data
     _crowdEmotionChart.series[0].setData([]);   
 
     // Add all emotions that have a value
-    persons.forEach((person) => {
+    persons.forEach(person => {
       let emotionData = person.emotions;
       for (var emotionKey in emotionData) {
         if (emotionData[emotionKey] > 0) {
@@ -284,14 +284,17 @@ _updateCrowdEmotionChart = persons => {
   }
 };
 
-_updateAgeGroupEmotionChart = (time, numberOfPeople) => {
+let _updateAgeGroupEmotionChart = persons => {
   if (_ageGroupEmotionChart) {
+    persons.forEach(person => {
+
+    })
     _ageGroupEmotionChart.series[0].addPoint([time, numberOfPeople]);
   }
 };
 
 
-_updateGenderEmotionChart = (time, numberOfPeople) => {
+let _updateGenderEmotionChart = (time, numberOfPeople) => {
   if (_genderEmotionChart) {
     _genderEmotionChart.series[0].addPoint([time, numberOfPeople]);
   }
