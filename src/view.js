@@ -71,7 +71,7 @@ let _render = () => {
       type: 'pie'
     },
     title: {
-      text: 'Breakdown of the Current Photo'
+      text: 'Breakdown All Emotions'
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -273,9 +273,6 @@ let _updatePeopleCounter = (numberOfPeople) => {
 
 let _updateCrowdEmotionChart = (emotionData) => {
   if (_crowdEmotionChart) {
-    // Remove previous pie chart data
-    _crowdEmotionChart.series[0].setData([]);   
-
     // Add all emotions that have a value
     for (var emotionKey in emotionData) {
       if (emotionData[emotionKey] > 0) {
