@@ -1,14 +1,13 @@
-let timePeopleChart;
-let crowdEmotionChart;
+let _ageGroupEmotionChart, _crowdEmotionChart, _genderEmotionChart, _timePeopleChart;
 
-function _render() {
+let _render = () => {
   Highcharts.setOptions({
     global: {
       useUTC: false
     }
   });
 
-  timePeopleChart = Highcharts.chart('time-people', {
+  _timePeopleChart = Highcharts.chart('time-people', {
     chart: {
       type: 'spline',
       animation: Highcharts.svg, // don't animate in old IE
@@ -64,7 +63,7 @@ function _render() {
     }]
   });
 
-  crowdEmotionChart = Highcharts.chart("crowd-emotion", {
+  _crowdEmotionChart = Highcharts.chart("crowd-emotion", {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -122,7 +121,7 @@ function _render() {
     }]
   });
 
-  Highcharts.chart("gender-emotion", {
+  _genderEmotionChart = Highcharts.chart("gender-emotion", {
     chart: {
       type: 'column'
     },
@@ -187,7 +186,7 @@ function _render() {
     }]
   });
 
-  Highcharts.chart("agegroup-emotion", {
+  _ageGroupEmotionChart = Highcharts.chart("agegroup-emotion", {
 
     chart: {
       type: 'heatmap',
@@ -255,27 +254,27 @@ function _render() {
 
   // let x = (new Date()).getTime(); // current time
   // let y = Math.random();
-  // timePeopleChart.series[0].addPoint([x, y]);
-  // timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
+  // _timePeopleChart.series[0].addPoint([x, y]);
+  // _timePeopleChart.series[0].addPoint([(new Date()).getTime(), Math.random()]);
 }
 
-function _updateTimePeopleChart(time, numberOfPeople) {
-  if (timePeopleChart) {
-    timePeopleChart.series[0].addPoint([time, numberOfPeople]);
+_updateTimePeopleChart = (time, numberOfPeople) => {
+  if (_timePeopleChart) {
+    _timePeopleChart.series[0].addPoint([time, numberOfPeople]);
   }
-}
+};
 
-function _updateCrowdEmotionChart(persons) {
-  if (crowdEmotionChart) {
+_updateCrowdEmotionChart = persons => {
+  if (_crowdEmotionChart) {
     // Remove previous pie chart data
-    crowdEmotionChart.series[0].setData([]);   
+    _crowdEmotionChart.series[0].setData([]);   
 
     // Add all emotions that have a value
     persons.forEach((person) => {
       let emotionData = person.emotions;
       for (var emotionKey in emotionData) {
         if (emotionData[emotionKey] > 0) {
-          crowdEmotionChart.series[0].addPoint({
+          _crowdEmotionChart.series[0].addPoint({
             name: emotionKey,
             y: emotionData[emotionKey]
           });
@@ -283,13 +282,26 @@ function _updateCrowdEmotionChart(persons) {
       }
     });
   }
-}
+};
 
-var renderCharts = function () {
+_updateAgeGroupEmotionChart = (time, numberOfPeople) => {
+  if (_ageGroupEmotionChart) {
+    _ageGroupEmotionChart.series[0].addPoint([time, numberOfPeople]);
+  }
+};
+
+
+_updateGenderEmotionChart = (time, numberOfPeople) => {
+  if (_genderEmotionChart) {
+    _genderEmotionChart.series[0].addPoint([time, numberOfPeople]);
+  }
+};
+
+let renderCharts = () => {
   _render();
 };
 
-var updateCharts = function (persons) {
+let updateCharts = persons => {
   if (persons && persons.length > 0) {
     _updateTimePeopleChart(persons[0].time, persons.length);
     //TODO: add the total people increment function here
