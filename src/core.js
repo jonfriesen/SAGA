@@ -72,7 +72,7 @@ window.addEventListener("load", () => {
     photographer.init();
     photographer.startWatch(data => {
         faceApi.AnalyzeImage(data).then(data => {
-            console.table(data);
+            console.table(data)
             let newData = wrangler.wrangle(data);
             view.updateCharts(newData);
         });

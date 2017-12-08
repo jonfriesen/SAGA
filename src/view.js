@@ -1,9 +1,9 @@
 let _ageGroupEmotionChart, _crowdEmotionChart, _genderEmotionChart, _timePeopleChart;
 const AGE_GROUPS = [
-  "<10", 
-  "11-20", 
-  "21-30", 
-  "31-40", 
+  "<10",
+  "11-20",
+  "21-30",
+  "31-40",
   "41-50",
   "51-60",
   "61-70",
@@ -166,16 +166,7 @@ let _render = () => {
     series: [{
       name: 'Emotion Intensities per Age Group',
       borderWidth: 1,
-      data: [
-        [0,0,0], [1,0,0], [2,0,0], [3,0,0], [4,0,0], [5,0,0], [6,0,0], [7,0,0],
-        [0,1,0], [1,1,0], [2,1,0], [3,1,0], [4,1,0], [5,1,0], [6,1,0], [7,1,0],
-        [0,2,0], [1,2,0], [2,2,0], [3,2,0], [4,2,0], [5,2,0], [6,2,0], [7,2,0],
-        [0,3,0], [1,3,0], [2,3,0], [3,3,0], [4,3,0], [5,3,0], [6,3,0], [7,3,0],
-        [0,4,0], [1,4,0], [2,4,0], [3,4,0], [4,4,0], [5,4,0], [6,4,0], [7,4,0],
-        [0,5,0], [1,5,0], [2,5,0], [3,5,0], [4,5,0], [5,5,0], [6,5,0], [7,5,0],
-        [0,6,0], [1,6,0], [2,6,0], [3,6,0], [4,6,0], [5,6,0], [6,6,0], [7,6,0],
-        [0,7,0], [1,7,0], [2,7,0], [3,7,0], [4,7,0], [5,7,0], [6,7,0], [7,7,0]
-      ],
+      data: [],
       dataLabels: {
         enabled: true,
         format: '{point.value:.2f}',
@@ -198,7 +189,7 @@ let _render = () => {
     name: 'female',
     data: [0, 0, 0, 0, 0, 0, 0, 0]
   };
-  _createNewGenderEmotionChart(defaultMaleData, defaultFemaleData); 
+  _createNewGenderEmotionChart(defaultMaleData, defaultFemaleData);
 }
 
 let _updateTimePeopleChart = (time, numberOfPeople) => {
@@ -289,7 +280,7 @@ let _updateGenderEmotionChart = (persons) => {
   if (_genderEmotionChart) {
     let maleData = _genderEmotionChart.options.series[0];
     let femaleData = _genderEmotionChart.options.series[1];
-    
+
     persons.forEach((person) => {
       let emotionIndex = EMOTIONS.findIndex((EMOTION) => { return EMOTION === person.feeling; });
       if (person.gender === "male") {
@@ -299,7 +290,7 @@ let _updateGenderEmotionChart = (persons) => {
       }
     });
 
-    _createNewGenderEmotionChart(maleData, femaleData); 
+    _createNewGenderEmotionChart(maleData, femaleData);
   }
 };
 
@@ -319,24 +310,68 @@ let _getAgeGroupIndex = age => {
   return _index;
 };
 
-let _updateAgeGroupEmotionChart = (persons) => {
-  if (_ageGroupEmotionChart) {
-    let dataPoints = _ageGroupEmotionChart.series[0].data;
-    persons.forEach(person => {
-      let _age = person.age;
-      let _emotionData = person.emotions;
-      let _emotionKeyIndex = 0;
-      for (let _emotionKey in _emotionData) {
-        dataPoints.push([
-          _getAgeGroupIndex(_age),
-          _emotionKeyIndex,
-          _emotionData[_emotionKey]
-        ]);
-        _emotionKeyIndex++;
-      }
-    });
-    _ageGroupEmotionChart.series[0].setData(dataPoints);
-  }
+// this is broken
+let _updateAgeGroupEmotionChart = newDatapoints => {
+  _ageGroupEmotionChart = Highcharts.chart("agegroup-emotion", {
+
+        chart: {
+          type: 'heatmap',
+          marginTop: 40,
+          marginBottom: 80,
+          plotBorderWidth: 1
+        },
+
+
+        title: {
+          text: 'Intensity per Age Group per Emotion'
+        },
+
+        xAxis: {
+          categories: AGE_GROUPS
+        },
+
+        yAxis: {
+          categories: EMOTIONS,
+          title: null
+        },
+
+        colorAxis: {
+          min: 0,
+          minColor: '#FFFFFF',
+          maxColor: Highcharts.getOptions().colors[0]
+        },
+
+        legend: {
+          align: 'right',
+          layout: 'vertical',
+          margin: 0,
+          verticalAlign: 'top',
+          y: 25,
+          symbolHeight: 280
+        },
+
+        tooltip: {
+          formatter: function () {
+            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+              this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+          }
+        },
+
+        series: [{
+          name: 'Emotion Intensities per Age Group',
+          borderWidth: 1,
+          data: newDatapoints,
+          dataLabels: {
+            enabled: true,
+            format: '{point.value:.2f}',
+            color: '#000000'
+          },
+          exporting: {
+            enabled: false
+          }
+        }]
+
+      });
 };
 
 let renderCharts = () => {
@@ -346,12 +381,13 @@ let renderCharts = () => {
 let updateCharts = (oData) => {
   if (oData.persons && oData.persons.length > 0) {
     _updateTimePeopleChart(oData.time, oData.persons.length);
-    
+
     _updatePeopleCounter(oData.persons.length);
 
     _updateCrowdEmotionChart(oData.aggregatedAnalysis);
 
-    _updateGenderEmotionChart(oData.persons);
+    _ageGroupEmotionChart.destroy();
+    _updateAgeGroupEmotionChart(oData.heatmapdp);
   }
 };
 
