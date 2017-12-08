@@ -331,7 +331,7 @@ let updateCharts = (oData) => {
 
     _updateCrowdEmotionChart(oData.aggregatedAnalysis);
 
-    _updateAgeGroupEmotionChart(oData.persons);
+    // _updateAgeGroupEmotionChart(oData.persons);
   }
 };
 
