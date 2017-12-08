@@ -102,7 +102,7 @@ function wrangle(aResponses) {
     iAge = aResponses[i].faceAttributes.age;
     iAgeIndex = (iAge > 70) ? 7 : Math.floor(iAge / 10);
     iEmotionIndex = oEmotionTable[_getEmotionValue(aResponses[i].faceAttributes.emotion)];
-    datapointgrid[iAgeIndex * 8 + iEmotionIndex][2]++;
+    datapointgrid[iAgeIndex + iEmotionIndex * 8][2]++;
   }
 
   // calculate the average value for each emotion
