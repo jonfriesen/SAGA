@@ -264,27 +264,31 @@ let _updateTimePeopleChart = (time, numberOfPeople) => {
   }
 };
 
-let _updateCrowdEmotionChart = persons => {
+let _updatePeopleCounter = (numberOfPeople) => {
+  var count = parseInt($('#count').text(), 10);
+  if (count >= 0) {
+    $('#count').text(count + numberOfPeople);
+  }
+};
+
+let _updateCrowdEmotionChart = (emotionData) => {
   if (_crowdEmotionChart) {
     // Remove previous pie chart data
     _crowdEmotionChart.series[0].setData([]);   
 
     // Add all emotions that have a value
-    persons.forEach(person => {
-      let emotionData = person.emotions;
-      for (var emotionKey in emotionData) {
-        if (emotionData[emotionKey] > 0) {
-          _crowdEmotionChart.series[0].addPoint({
-            name: emotionKey,
-            y: emotionData[emotionKey]
-          });
-        }
+    for (var emotionKey in emotionData) {
+      if (emotionData[emotionKey] > 0) {
+        _crowdEmotionChart.series[0].addPoint({
+          name: emotionKey,
+          y: emotionData[emotionKey]
+        });
       }
-    });
+    }
   }
 };
 
-let _updateAgeGroupEmotionChart = persons => {
+let _updateAgeGroupEmotionChart = (persons) => {
   if (_ageGroupEmotionChart) {
     persons.forEach(person => {
 
@@ -292,7 +296,6 @@ let _updateAgeGroupEmotionChart = persons => {
     _ageGroupEmotionChart.series[0].addPoint([time, numberOfPeople]);
   }
 };
-
 
 let _updateGenderEmotionChart = (time, numberOfPeople) => {
   if (_genderEmotionChart) {
@@ -304,12 +307,13 @@ let renderCharts = () => {
   _render();
 };
 
-let updateCharts = persons => {
-  if (persons && persons.length > 0) {
-    _updateTimePeopleChart(persons[0].time, persons.length);
-    //TODO: add the total people increment function here
+let updateCharts = (oData) => {
+  if (oData.persons && oData.persons.length > 0) {
+    _updateTimePeopleChart(oData.time, oData.persons.length);
+    
+    _updatePeopleCounter(oData.persons.length);
 
-    _updateCrowdEmotionChart(persons);
+    _updateCrowdEmotionChart(oData.aggregatedAnalysis);
   }
 };
 
