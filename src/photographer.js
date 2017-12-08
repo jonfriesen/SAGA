@@ -44,14 +44,15 @@ var init = function() {
             _onFaceDetected();
         });
     });
-    
+
     setTimeout(() => {
         canvas.setAttribute("height", video.offsetHeight);
         console.log(video.offsetHeight);
         canvas.setAttribute("width", video.offsetWidth);
-    
+
         invisibleCanvas.setAttribute("height", 720);
         invisibleCanvas.setAttribute("width", 1280);
+        invisibleCanvas.setAttribute("hidden", true);
     }, 3000);
 }
 
@@ -86,7 +87,7 @@ var invisibleCanvas = document.createElement('canvas');
 
 var onFaceOut = () => {};
 var onFaceIn = () => {
-    
+
     document.body.appendChild(invisibleCanvas);
     invisibleCanvas.getContext('2d').drawImage(video, 0, 0, 1280, 720);
     invisibleCanvas.toBlob(callback);
