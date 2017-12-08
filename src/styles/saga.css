@@ -2,8 +2,9 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-gap: 10px;
-    grid-auto-rows: minmax(calc(100vw/8 - 15px), auto);
+    grid-auto-rows: auto;
     max-width: 100%;
+    height: 100vh;
 }
 
 .wrapper > div:not(#logo) {
@@ -68,8 +69,6 @@
 
 .cameraCanvas {
     position: absolute;
-    /* width: 320px;
-    height: 240px; */
 }
 
 .cameraVideo {
