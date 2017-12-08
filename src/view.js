@@ -35,12 +35,12 @@ let _render = () => {
     {
       name: 'male',
       data: [0, 0, 0, 0, 0, 0, 0, 0]
-    }, 
+    },
     {
       name: 'female',
       data: [0, 0, 0, 0, 0, 0, 0, 0]
     }
-  ); 
+  );
 
   _ageGroupEmotionChart = Highcharts.chart("agegroup-emotion", {
 
@@ -86,6 +86,10 @@ let _render = () => {
       }
     },
 
+    exporting: {
+      enabled: false
+    },
+
     series: [{
       name: 'Emotion Intensities per Age Group',
       borderWidth: 1,
@@ -94,9 +98,6 @@ let _render = () => {
         enabled: true,
         format: '{point.value:.2f}',
         color: '#000000'
-      },
-      exporting: {
-        enabled: false
       }
     }]
 
@@ -309,7 +310,7 @@ let _updateGenderEmotionChart = (persons) => {
       }
     });
 
-    _genderEmotionChart = _createGenderEmotionChart(maleData, femaleData); 
+    _genderEmotionChart = _createGenderEmotionChart(maleData, femaleData);
   }
 };
 
@@ -369,6 +370,10 @@ let _updateAgeGroupEmotionChart = newDatapoints => {
           symbolHeight: 280
         },
 
+        exporting: {
+          enabled: false
+        },
+
         tooltip: {
           formatter: function () {
             return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> age <br><b>' +
@@ -404,7 +409,7 @@ let updateCharts = (oData) => {
 
     _ageGroupEmotionChart.destroy();
     _updateAgeGroupEmotionChart(oData.heatmapdp);
-    
+
     _updateGenderEmotionChart(oData.persons);
 
     _updateTimePeopleChart(oData.time, oData.persons.length);
