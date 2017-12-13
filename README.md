@@ -1,5 +1,5 @@
 # ![SAGA Logo](src/images/logo.png)
-This project was created as part of SAP Analytic Cloud's December 2017 hack day. The motivation behind it was to branch outside of our day to day development tools, frameworks, and infrastructure to try something new. We a general analytic theme we decided to take on visual recognition and decided that the facial recognition and emotion analysis from the Azure Cognitive services was a prime resource we could leverage.
+This project was created as part of SAP Analytic Cloud's December 2017 hack day. The motivation behind it was to branch outside of our day to day development tools, frameworks, and infrastructure to try something new. We had a general analytic theme we decided to take on visual recognition and decided that the facial recognition and emotion analysis from the Azure Cognitive services was a prime resource we could leverage.
 
 The visualizations from top to bottom, left to right:
 
