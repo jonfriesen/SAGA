@@ -1,7 +1,7 @@
 
 // https://docs.microsoft.com/en-us/azure/cognitive-services/Face/QuickStarts/JavaScript
 
-const msApiKey = "e40530824cf348878e0ed2ecaa4754ee";
+const msApiKey = "<enter your face api key>";
 const msRegion = "westcentralus";
 
 // Below are options for request:

@@ -1,11 +1,7 @@
 
 // https://docs.microsoft.com/en-us/azure/cognitive-services/Face/QuickStarts/JavaScript
 
-// Jons Key
-// e40530824cf348878e0ed2ecaa4754ee
-// 28dca11fdff743db9797852c442703e7
-
-const msApiKey = "e40530824cf348878e0ed2ecaa4754ee";
+const msApiKey = "<enter your face api key>";
 const msRegion = "westcentralus";
 
 // "age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise"
